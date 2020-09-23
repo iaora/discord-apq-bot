@@ -1,0 +1,5 @@
+tutorial-env/
+bot-env/
+__pycache__/
+*.swp
+keys.py
