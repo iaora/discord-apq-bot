@@ -3,3 +3,7 @@ bot-env/
 __pycache__/
 *.swp
 keys.py
+firebase.*
+firestore.*
+.firebaserc
+apq_discord_bot/__pycache_/
