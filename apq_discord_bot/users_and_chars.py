@@ -1,4 +1,5 @@
 from apq_discord_bot import db, client
+from apq_discord_bot.helper import *
 
 
 def remove_char(ign):
@@ -33,7 +34,7 @@ def add_char(command_list, author_info):
 	users_c = db.collection('users')
 	if check_doc_exists(users_c, str(author_info.id)) is False:
 		print ('Adding new user')
-		add_user(users_c, str(author_info.id), str(author_info.name))
+		add_user(users_c, str(author_info.id), str(author_info.name.lower()))
 
 	# Check if character exists 
 	characters_c = db.collection('characters')
@@ -43,9 +44,9 @@ def add_char(command_list, author_info):
 	# If the user exists and the character does NOT exist, then create a new character document in the users collection
 	data = {
 		'ign' : command_list[0].lower(),
-		'class' : command_list[1],
-		'apq_type' : command_list[2],
-		'user' : db.collection('users').document(str(author_info.name))
+		'class' : command_list[1].lower(),
+		'apq_type' : command_list[2].lower(),
+		'user' : db.collection('users').document(str(author_info.id))
 	}
 
 	db.collection('characters').document(command_list[0].lower()).set(data)
@@ -62,8 +63,16 @@ def check_doc_exists(collection, name):
 def add_user(users_coll, discord_author_id, discord_author_name):
 	data = {
 		'discord_user' : discord_author_name,
-		'discord_id' : discord_author_id
+		'discord_id' : discord_author_id,
 	}
 	users_coll.document(discord_author_id).set(data)
 	print (f' {data} added into document {discord_author_id}')
 
+
+def add_name(discord_author_name, name):
+	tar_doc_id = find_single_doc_id(db.collection('users'), 'discord_user', discord_author_name)
+	db.collection('users').document(tar_doc_id).update(
+		{'name' : name}
+	)
+
+	return(f'Added {name}')

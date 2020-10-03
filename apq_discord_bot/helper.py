@@ -17,5 +17,5 @@ def str_remove_command(message, command):
 	return message.content[len(command)+1:]
 
 
-def find_single_doc_id(collection_name, tar_field, tar_key):
-	return collection_name.where(tar_field, '==', tar_key).get()[0].id
+def find_single_doc_id(collection_ref, tar_field, tar_key):
+	return collection_ref.where(tar_field, '==', tar_key).get()[0].id

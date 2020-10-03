@@ -16,9 +16,6 @@ async def on_message(message):
 		return
 
 	if message.content.startswith('$hello'):
-		db_print('users')
-
-
 		await message.channel.send('Hello!')
 	
 
@@ -33,6 +30,20 @@ async def on_message(message):
 			await message.channel.send('```Incorrect number of arguments. Command is: $add char <IGN> <CLASS> <BR/GR>```')
 		else:
 			await message.channel.send('```'+add_char(command_list, message.author)+'```')
+
+
+
+	"""
+		EXPECTED COMMAND:
+			$add name <NAME>
+	"""
+	if message.content.startswith('$add name'):
+		command_list = str_remove_command(message, '$add name').split()
+		# Check if the number of variables is correct 
+		if len(command_list) != 1:
+			await message.channel.send('```Incorrect number of arguments. Command is: $add user <NAME>```')
+		else:
+			await message.channel.send('```'+add_name(message.author.name.lower(), command_list[0].lower())+'```')
 
 
 
@@ -59,9 +70,29 @@ async def on_message(message):
 	if message.content.startswith('$log'):
 		command_list = str_remove_command(message, '$log').split()
 		# Check if the number of variables is correct 
-		await message.channel.send('```'+log_daily(command_list[0], command_list[1:])+'```')
+		await message.channel.send('```'+log_daily(command_list[0].lower(), command_list[1:])+'```')
 			
+
+	"""
+		EXPECTED COMMAND:
+			$daily <IGN>, or
+			$daily <DAILY>, or
+			$daily <DAILY> <USER>
+
+		Returns the timestamps of all bosses for a specific character
+	"""
+	if message.content.startswith('$daily'):
+		command_list = str_remove_command(message, '$daily').split()
+		# Check if the number of variables is correct 
+		if len(command_list) > 2:
+			await message.channel.send('```Incorrect number of arguments. Command is: $daily <IGN> or $daily <BOSS> or $daily <BOSS> <USER>```')
+		else:
+			await message.channel.send('```'+query_dailies(command_list, message.author.name.lower())+'```')
 	
 
+	if message.content.startswith('$help'):
+		await message.channel.send('```\n Add a new char: $add char <IGN> <CLASS> <BR/BR>\n Add your name: $add name <NAME>\n Remove a character: $remove <IGN>\n \n Log a new daily: $log <PQ/BOSS> <IGN> (optional: <IGN> <IGN>)```')
+
+	
 
 client.run(discord_token)
