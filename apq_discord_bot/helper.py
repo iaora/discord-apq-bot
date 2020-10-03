@@ -10,6 +10,12 @@ def db_print(collection):
 	# doc.to_dict()['Iaora']['user_id'].get().get('jamie')
 	# Gets a user_id reference from Characters
 
+
+# Removes the prefex from a command. Returns the important command fields
+# Ex: '$add char xuri se br'  -->  ['xuri', 'se', 'br']
 def str_remove_command(message, command):
 	return message.content[len(command)+1:]
 
+
+def find_single_doc_id(collection_name, tar_field, tar_key):
+	return collection_name.where(tar_field, '==', tar_key).get()[0].id
