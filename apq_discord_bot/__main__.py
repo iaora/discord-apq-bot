@@ -3,6 +3,7 @@ from apq_discord_bot import db, client
 from apq_discord_bot.helper import *
 from apq_discord_bot.users_and_chars import *
 from apq_discord_bot.dailies import *
+from apq_discord_bot.image_ocr import *
 
 from keys import discord_token
 
@@ -18,6 +19,10 @@ async def on_message(message):
 	if message.content.startswith('$hello'):
 		await message.channel.send('Hello!')
 	
+	if message.attachments[0]:
+		print ('Attachment woooooooooooooo')
+		accept_image(message.attachments[0])
+	#messages.attachments[0].url
 
 	"""
 		EXPECTED COMMAND:
