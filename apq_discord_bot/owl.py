@@ -87,3 +87,12 @@ def add_owl_screenshot(url):
 	log_item_prices(item_name, prices)
 	add_item_to_items_collection(item_name)
 	update_items_collection(item_name)
+
+	return item_name
+
+
+def get_item_info(item_name):
+	item_info = db.collection('items').where('item_name', '==', item_name).get()
+	if len(item_info) == 0:
+		return 
+	return item_info[0].to_dict()

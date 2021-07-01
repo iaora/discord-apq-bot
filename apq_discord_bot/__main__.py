@@ -4,7 +4,7 @@ from apq_discord_bot.db_helper import *
 from apq_discord_bot.users_and_chars import *
 from apq_discord_bot.dailies import *
 from apq_discord_bot.image_ocr import *
-from apq_discord_bot.owl import *
+import apq_discord_bot.owl as owl
 
 from keys import discord_token
 
@@ -12,7 +12,7 @@ from keys import discord_token
 async def on_ready():
 	print('We have logged in as {0.user}'.format(client))
 	url = 'https://media.discordapp.net/attachments/848937705114304572/857474691266248744/unknown.png'
-	add_owl_screenshot(url)
+	#owl.add_owl_screenshot(url)
 
 @client.event
 async def on_message(message):
@@ -24,9 +24,31 @@ async def on_message(message):
 	
 	if message.attachments:
 		print ('Attachment woooooooooooooo')
-		add_owl_screenshot(message.attachments[0].url)
+		# check if correct channel
+		item_name = owl.add_owl_screenshot(message.attachments[0].url)
+		await message.channel.send('{} added!'.format(item_name))	
 	#messages.attachments[0].url
 
+	"""------------------ OWL BOT -------------------"""
+	if message.content.startswith('$get price'):
+		import datetime
+		command_list = str_remove_command(message, '$get price')
+		item_info = owl.get_item_info(command_list)
+		if not item_info:
+			result = 'Error: Could not find item'
+		else:
+			result = '**{}**\n>>> Avg Price: {}\nMin Price: {}\nMax Price: {}\nMedian Price: {}\nLast updated: {}'.format(
+			item_info['item_name'], 
+			format(item_info['avg'],','),
+			format(item_info['min'],','),
+			format(item_info['max'],','),
+			format(item_info['median'],','),
+			item_info['update_date'].strftime('%m-%d-%y'))
+
+		await message.channel.send(result)	
+
+
+	"""------------------ APQ BOT -------------------"""
 	"""
 		EXPECTED COMMAND:
 			$add char <IGN> <CLASS> <BR/GR>
