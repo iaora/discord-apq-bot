@@ -1,5 +1,8 @@
 from apq_discord_bot import db, client
 
+from datetime import datetime
+import pytz
+
 
 # ------------------------ HELPER METHODS ----------------------------------
 def db_print(collection):
@@ -9,6 +12,11 @@ def db_print(collection):
 	    print(f'{doc.id} => {doc.to_dict()}')
 	# doc.to_dict()['Iaora']['user_id'].get().get('jamie')
 	# Gets a user_id reference from Characters
+
+
+def get_current_time():
+	tz_NY = pytz.timezone('America/New_York') 
+	return datetime.now(tz_NY)
 
 
 # Removes the prefex from a command. Returns the important command fields

@@ -11,7 +11,7 @@ from keys import discord_token
 @client.event
 async def on_ready():
 	print('We have logged in as {0.user}'.format(client))
-	url = 'https://cdn.discordapp.com/attachments/848937705114304572/857474603773722624/unknown.png'
+	url = 'https://media.discordapp.net/attachments/848937705114304572/857474691266248744/unknown.png'
 	add_owl_screenshot(url)
 
 @client.event

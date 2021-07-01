@@ -15,7 +15,7 @@ def img_to_greyscale(img):
 
 """Converts all black text into white. increase image size"""
 def clean_img(img):
-	img = cv2.resize(img, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+	img = cv2.resize(img, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC)
 	# Load the image and convert to HSV colourspace
 	hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
 
