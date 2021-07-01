@@ -1,5 +1,5 @@
 from apq_discord_bot import db, client
-from apq_discord_bot.helper import *
+from apq_discord_bot.db_helper import *
 #from firebase_admin.firestore import SERVER_TIMESTAMP
 import time
 

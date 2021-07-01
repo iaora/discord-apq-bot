@@ -17,5 +17,10 @@ def str_remove_command(message, command):
 	return message.content[len(command)+1:]
 
 
+def check_doc_exists(collection, name):
+	print (f'Checking if {name} exists in {collection}')
+	return collection.document(name).get().exists
+
+
 def find_single_doc_id(collection_ref, tar_field, tar_key):
 	return collection_ref.where(tar_field, '==', tar_key).get()[0].id

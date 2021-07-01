@@ -1,5 +1,5 @@
 from apq_discord_bot import db, client
-from apq_discord_bot.helper import *
+from apq_discord_bot.db_helper import *
 
 
 def remove_char(ign):
@@ -54,11 +54,6 @@ def add_char(command_list, author_info):
 	return (f'Added a new character: {command_list[0]}')
 
 
-
-def check_doc_exists(collection, name):
-	print (f'Checking if {name} exists in {collection}')
-	return collection.document(name).get().exists
-	
 
 def add_user(users_coll, discord_author_id, discord_author_name):
 	data = {

@@ -1,15 +1,18 @@
 from apq_discord_bot import db, client
 
-from apq_discord_bot.helper import *
+from apq_discord_bot.db_helper import *
 from apq_discord_bot.users_and_chars import *
 from apq_discord_bot.dailies import *
 from apq_discord_bot.image_ocr import *
+from apq_discord_bot.owl import *
 
 from keys import discord_token
 
 @client.event
 async def on_ready():
 	print('We have logged in as {0.user}'.format(client))
+	url = 'https://cdn.discordapp.com/attachments/848937705114304572/857474603773722624/unknown.png'
+	add_owl_screenshot(url)
 
 @client.event
 async def on_message(message):
@@ -19,9 +22,9 @@ async def on_message(message):
 	if message.content.startswith('$hello'):
 		await message.channel.send('Hello!')
 	
-	if message.attachments[0]:
+	if message.attachments:
 		print ('Attachment woooooooooooooo')
-		accept_image(message.attachments[0])
+		add_owl_screenshot(message.attachments[0].url)
 	#messages.attachments[0].url
 
 	"""
@@ -96,8 +99,7 @@ async def on_message(message):
 	
 
 	if message.content.startswith('$help'):
-		await message.channel.send('```\n Add a new char: $add char <IGN> <CLASS> <BR/BR>\n Add your name: $add name <NAME>\n Remove a character: $remove <IGN>\n \n Log a new daily: $log <PQ/BOSS> <IGN> (optional: <IGN> <IGN>)```')
+		await message.channel.send('```\n Add a new char: $add char <IGN> <CLASS> <BR/GR>\n Add your name: $add name <NAME>\n Remove a character: $remove <IGN>\n \n Log a new daily: $log <PQ/BOSS> <IGN> (optional: <IGN> <IGN>)```')
 
 	
-
 client.run(discord_token)
